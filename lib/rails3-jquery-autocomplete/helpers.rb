@@ -52,6 +52,7 @@ module Rails3JQueryAutocomplete
           end
         when :activerecord, :thinking_sphinx then
           order ? order : fields.collect{|f| "#{f.to_sym} ASC" }.join(", ")
+          order = nil if order.blank?
       end
     end
 
@@ -96,7 +97,7 @@ module Rails3JQueryAutocomplete
       
       limit = get_limit(options)
       implementation = get_implementation(pool_items) 
-      order = get_order(implementation, "created_at", options)
+      order = get_order(implementation, [], options)
 
       case implementation
         when :mongoid
