@@ -13,7 +13,7 @@ module Rails3JQueryAutocomplete
     #   get_object(:actor)
     #   # returns a Actor constant supposing it is already defined
     def get_object(model)
-      object = model.is_a? Symbol ? model.to_s.camelize.constantize : model
+      object = model.is_a?(Symbol) ? model.to_s.camelize.constantize : model
     end
 
     # Returns a symbol representing what implementation should be used to query
