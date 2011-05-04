@@ -40,7 +40,9 @@ module Rails3JQueryAutocomplete
           if multiple_models
             items = get_items_from_multiple_sources(pool_items, term, options)
           else
-            items = get_items_from_single_model(get_object(pool_name), pool_items, term, options)
+            #allow specifying fully qualified class name for model object
+            class_name = options[:class_name] || pool_name
+            items = get_items_from_single_model(get_object(class_name), pool_items, term, options)
           end
         else
           items = {}
