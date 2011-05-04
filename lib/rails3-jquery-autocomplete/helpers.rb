@@ -21,7 +21,7 @@ module Rails3JQueryAutocomplete
     def get_implementation(pool)
       object = pool.is_a?(Array) ? pool[0] : pool 
 
-      if object.included_modules.collect(&:to_s).include?('ThinkingSphinx::ActiveRecord')
+      if object.respond_to?(:has_sphinx_indexes?) && object.has_sphinx_indexes?
         :thinking_sphinx
       elsif object.superclass.to_s == 'ActiveRecord::Base'
         :activerecord
@@ -51,7 +51,8 @@ module Rails3JQueryAutocomplete
             end
           end
         when :activerecord, :thinking_sphinx then
-          order ? order : fields.collect{|f| "#{f.to_sym} ASC" }.join(", ")
+          fields = fields.collect{|f| "#{f} ASC" }.join(", ") if fields.is_a? Array
+          order = order ? order : fields
           order = nil if order.blank?
       end
     end
@@ -114,3 +115,4 @@ module Rails3JQueryAutocomplete
 
   end
 end
+
