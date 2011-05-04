@@ -48,9 +48,11 @@ module Rails3JQueryAutocomplete
           items = {}
         end
 
-        render :json => json_for_autocomplete(items, options[:display_value] ||= pool_items)
+	render_method = options[:render_method] || :json_for_autocomplete
+       	render :json => send(render_method, items, options[:display_value] ||= pool_items)
       end
     end
   end
 
 end
+
